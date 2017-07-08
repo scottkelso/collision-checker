@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request
-import ml_application as ml
 
 app = Flask(__name__)
 
@@ -8,16 +7,32 @@ app = Flask(__name__)
 def placeholder_get():
     return "Hello, World!"
 
-@app.route('/placeholder_post', methods=['POST'])
-def placeholder_post():
-    return ml.classify(request.stream.read())
+@app.route('/chanceOfFatalitiesCollisions', methods=['GET'])
+def get_fatalities_collision_count():
+    return str(210)
 
-@app.route('/placeholder_post_image', methods=['POST'])
-def placeholder_post_image():
-    return ml.classify_image(request.data)
+@app.route('/chanceOfSeriousCollisions', methods=['GET'])
+def get_serious_collision_count():
+    return str(2141)
+
+@app.route('/chanceOfSlightInjuryCollisions', methods=['GET'])
+def get_slight_injury_collision_count():
+    return str(25961)
+
+@app.route('/chanceOfFatalitiesCollisionsInArea', methods=['POST'])
+def get_fatalities_collision_count_for_area():
+    print(request.form['key'])
+    return str(10)
+
+@app.route('/chanceOfSeriousCollisionsInArea', methods=['POST'])
+def get_serious_collision_count_for_area():
+    print(request.form['key'])
+    return str(12)
+
+@app.route('/chanceOfSlightInjuryCollisionsInArea', methods=['POST'])
+def get_slight_injury_collision_count_for_area():
+    print(request.form['key'])
+    return str(19)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# Test the get - curl -X GET http://localhost:5000/placeholder_get
-# test the post curl -d "test" -X POST http://localhost:5000/placeholder_post
