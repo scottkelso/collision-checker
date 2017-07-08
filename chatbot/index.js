@@ -50,24 +50,6 @@ bot.dialog('TestPost', [
     matches: /post/i
 });
 
-var locations = {
-
-}
-var locations = {
-    "Northern Ireland": {
-        value: 0
-    },
-    "Belfast City": {
-        value: 7
-    },
-    "Lisburn": {
-        value: 24
-    },
-    "Newtownards": {
-        value: 14
-    }
-}
-
 // ACTUAL DIALOGS HERE
 bot.dialog('ChanceOfFatalitiesCollisions', [
 	function(session) {
@@ -177,6 +159,37 @@ bot.dialog('ChanceOfSlightInjuryCollisions', [
     }
 ]).triggerAction({
     matches: /slight|minor/i
+});
+
+bot.dialog('CollisionCount', [
+	function(session) {
+		request('http://localhost:5000/collisionCount', function (error, response, body) {
+			var msg = "There have been " + body + " collisions recorded in Northern Ireland in the past 2 years."
+			session.endDialog(msg);
+		});
+	}
+]).triggerAction({
+    matches: /collisions/i
+});
+
+bot.dialog('CollisionProbablility', [
+	function(session) {
+		request('http://localhost:5000/collisionProbablility', function (error, response, body) {
+			console.log(body)
+			// var msg = "There is a " + body[0] + "% chance of having a fatal collision and a " + body[1] + "% chance of a serious collision on average in Northern Ireland."
+			session.endDialog(body);
+		});
+	}
+]).triggerAction({
+    matches: /probabilitly|chance/i
+});
+
+bot.dialog('ChatbotFunctions', [
+	function(session) {
+		session.send("I can tell you how many collisions have happened in all of Northern Ireland. Or how about how many were serious or fatal? You could also ask me what is the probability")
+	}
+]).triggerAction({
+    matches: /what can you do|help/i
 });
 
 function getMinorCollisions(session) {
