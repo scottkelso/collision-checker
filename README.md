@@ -39,3 +39,10 @@ To run the python server run the following command in the backend directory...
 `python app.py`
 
 Now this allows the nodejs server to hit endpoints that relate to requesting data from the machine learning algorithm.
+
+## Colaberators
+
+-Jake 
+-Josh
+
+
